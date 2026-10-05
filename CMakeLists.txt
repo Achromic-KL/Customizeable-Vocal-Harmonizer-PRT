@@ -40,20 +40,12 @@ target_link_libraries(VocalHarmonizer PRIVATE
 )
 
 # --- Rubber Band (installed via vcpkg: vcpkg install rubberband:x64-windows) ---
-# Rubber Band only exposes a pkg-config module, not a CMake config package,
-# so rather than fight CMake's pkg-config support on Windows, we link
-# directly against the confirmed install paths from `dir` output.
 set(RUBBERBAND_ROOT "C:/Users/danga/vcpkg/installed/x64-windows"
     CACHE PATH "Path to vcpkg's x64-windows install tree containing Rubber Band")
 
 target_include_directories(VocalHarmonizer PRIVATE "${RUBBERBAND_ROOT}/include")
 target_link_libraries(VocalHarmonizer PRIVATE "${RUBBERBAND_ROOT}/lib/rubberband.lib")
 
-# Rubber Band builds as a DLL (rubberband-3.dll), and it pulls in its own
-# runtime dependencies (samplerate.dll for resampling, sleef*.dll for SIMD
-# math) that also have to sit next to the .exe at runtime. Rather than list
-# each one by name and risk missing one if vcpkg's dependency set changes
-# later, just copy every DLL vcpkg put in that bin folder.
 file(GLOB RUBBERBAND_RUNTIME_DLLS "${RUBBERBAND_ROOT}/bin/*.dll")
 
 add_custom_command(TARGET VocalHarmonizer POST_BUILD
