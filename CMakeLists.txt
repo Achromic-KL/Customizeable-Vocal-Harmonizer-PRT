@@ -41,10 +41,39 @@ target_link_libraries(VocalHarmonizer PRIVATE
 
 # --- Rubber Band (installed via vcpkg: vcpkg install rubberband:x64-windows) ---
 # Rubber Band only exposes a pkg-config module, not a CMake config package,
-# so rather than fight CMake's pkg-config support on Windows, we link
-# directly against the confirmed install paths from `dir` output.
-set(RUBBERBAND_ROOT "C:/Users/danga/vcpkg/installed/x64-windows"
-    CACHE PATH "Path to vcpkg's x64-windows install tree containing Rubber Band")
+# so we link directly against vcpkg's install tree rather than using
+# find_package(). That install tree's location isn't something we can know
+# in advance, so resolve it in order of preference:
+#
+#   1. An explicit -DRUBBERBAND_ROOT=... passed at configure time (highest
+#      priority - always wins if given).
+#   2. The VCPKG_ROOT environment variable, if set (the standard convention
+#      vcpkg itself recommends - see https://learn.microsoft.com/vcpkg).
+#   3. Otherwise, fail with a clear message instead of a confusing linker
+#      error further down the build.
+if(NOT RUBBERBAND_ROOT)
+    if(DEFINED ENV{VCPKG_ROOT})
+        set(RUBBERBAND_ROOT "$ENV{VCPKG_ROOT}/installed/x64-windows")
+    endif()
+endif()
+
+set(RUBBERBAND_ROOT "${RUBBERBAND_ROOT}" CACHE PATH
+    "Path to vcpkg's x64-windows install tree containing Rubber Band")
+
+if(NOT EXISTS "${RUBBERBAND_ROOT}/include/rubberband/RubberBandStretcher.h")
+    message(FATAL_ERROR
+        "Could not find Rubber Band under RUBBERBAND_ROOT=\"${RUBBERBAND_ROOT}\".\n"
+        "\n"
+        "Fix this by either:\n"
+        "  1. Setting a VCPKG_ROOT environment variable pointing at your vcpkg\n"
+        "     folder (e.g. setx VCPKG_ROOT \"C:\\path\\to\\vcpkg\"), then opening a\n"
+        "     new terminal and re-running cmake, or\n"
+        "  2. Passing -DRUBBERBAND_ROOT=<path>/installed/x64-windows explicitly\n"
+        "     when running cmake -B build ...\n"
+        "\n"
+        "Either way, make sure Rubber Band itself is installed first:\n"
+        "  vcpkg install rubberband:x64-windows")
+endif()
 
 target_include_directories(VocalHarmonizer PRIVATE "${RUBBERBAND_ROOT}/include")
 target_link_libraries(VocalHarmonizer PRIVATE "${RUBBERBAND_ROOT}/lib/rubberband.lib")
