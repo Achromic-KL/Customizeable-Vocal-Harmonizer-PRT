@@ -30,7 +30,7 @@ cd vcpkg
 .\vcpkg install rubberband:x64-windows
 ```
 
-This takes a few minutes — it's compiling the library, not just downloading it. Use the `x64-windows` triplet specifically; the static triplet (`x64-windows-static`) isn't supported by this port.
+This takes a few minutes it's compiling the library. Use the `x64-windows` triplet specifically.
 
 `CMakeLists.txt` needs to know where vcpkg installed Rubber Band. It resolves this automatically from a `VCPKG_ROOT` environment variable — set one (once) pointing at wherever you cloned vcpkg:
 
@@ -72,11 +72,10 @@ Run it directly, or open `build\VocalHarmonizer.sln` in Visual Studio for debugg
 ## Using it
 
 1. Launch the app and allow microphone access if prompted.
-2. Use headphones, not speakers — the app plays your harmonized voice back live, and speakers will cause feedback into the mic.
+2. Use headphones, the app plays your harmonized voice back live, and speakers will cause feedback into the mic.
 3. Sing or hum a sustained note. The detected pitch and note name appear on screen.
 4. Pick a harmony interval from the dropdown — the target harmony note updates live.
-5. You should hear your own voice plus a pitch-shifted harmony layered on top. There's a small (~20–50ms) delay before the harmony kicks in after a build or app restart — this is normal startup behavior for the underlying pitch-shifting algorithm, not a bug.
-6. If the delay feels too long during live use, click **Audio Settings...** in the app and lower the buffer size, or switch to an ASIO driver if you have one (e.g. via the free [ASIO4ALL](https://asio4all.org/)).
+5. If the delay feels too long during live use, click **Audio Settings...** in the app and lower the buffer size, or switch to an ASIO driver if you have one (e.g. via the free [ASIO4ALL](https://asio4all.org/)).
 
 ## Routing into Discord / other voice apps
 
@@ -107,4 +106,4 @@ VocalHarmonizer/
 
 ## License note
 
-Rubber Band Library is GPL-licensed. It's used here as an external dependency (installed via vcpkg, not bundled in this repo), so this doesn't affect the license of this project's own source code. If you plan to distribute compiled binaries built from this project to others, be aware that GPL's terms would apply to that binary — worth reading [Rubber Band's licensing page](https://breakfastquay.com/rubberband/license.html) before doing so.
+Rubber Band Library is GPL-licensed. It's used here as an external dependency (installed via vcpkg, not bundled in this repo), so this doesn't affect the license of this project's own source code. Worth reading [Rubber Band's licensing page](https://breakfastquay.com/rubberband/license.html) if you want to use it commercially.
