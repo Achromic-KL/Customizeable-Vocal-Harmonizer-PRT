@@ -40,6 +40,7 @@ target_link_libraries(VocalHarmonizer PRIVATE
 )
 
 # --- Rubber Band (installed via vcpkg: vcpkg install rubberband:x64-windows) ---
+<<<<<<< HEAD
 # Rubber Band only exposes a pkg-config module, not a CMake config package,
 # so we link directly against vcpkg's install tree rather than using
 # find_package(). That install tree's location isn't something we can know
@@ -74,15 +75,14 @@ if(NOT EXISTS "${RUBBERBAND_ROOT}/include/rubberband/RubberBandStretcher.h")
         "Either way, make sure Rubber Band itself is installed first:\n"
         "  vcpkg install rubberband:x64-windows")
 endif()
+=======
+set(RUBBERBAND_ROOT "C:/Users/danga/vcpkg/installed/x64-windows"
+    CACHE PATH "Path to vcpkg's x64-windows install tree containing Rubber Band")
+>>>>>>> f2a238db83cd08dca817459a72eda61a800a941e
 
 target_include_directories(VocalHarmonizer PRIVATE "${RUBBERBAND_ROOT}/include")
 target_link_libraries(VocalHarmonizer PRIVATE "${RUBBERBAND_ROOT}/lib/rubberband.lib")
 
-# Rubber Band builds as a DLL (rubberband-3.dll), and it pulls in its own
-# runtime dependencies (samplerate.dll for resampling, sleef*.dll for SIMD
-# math) that also have to sit next to the .exe at runtime. Rather than list
-# each one by name and risk missing one if vcpkg's dependency set changes
-# later, just copy every DLL vcpkg put in that bin folder.
 file(GLOB RUBBERBAND_RUNTIME_DLLS "${RUBBERBAND_ROOT}/bin/*.dll")
 
 add_custom_command(TARGET VocalHarmonizer POST_BUILD
