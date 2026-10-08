@@ -14,10 +14,10 @@ A real-time vocal harmonizer built as a native Windows app with [JUCE](https://j
 
 You'll need these installed before building:
 
-1. **Visual Studio 2022 or 2026 (Community)** — free. During install, select the **"Desktop development with C++"** workload. This is required; without it, CMake can't find a usable compiler.
-2. **CMake** 3.22+ — from [cmake.org](https://cmake.org/download/). Check "Add CMake to PATH" during install.
-3. **Git** — from [git-scm.com](https://git-scm.com/). Also used by CMake to auto-download JUCE.
-4. **vcpkg** — Microsoft's C++ package manager, used to install the Rubber Band library (see below).
+1. **Visual Studio 2022 or 2026 (Community)** : free. During install, select the **"Desktop development with C++"** workload. This is required; without it, CMake can't find a usable compiler.
+2. **CMake** 3.22+ : from [cmake.org](https://cmake.org/download/). Check "Add CMake to PATH" during install.
+3. **Git** : from [git-scm.com](https://git-scm.com/). Also used by CMake to auto-download JUCE.
+4. **vcpkg** : Microsoft's C++ package manager, used to install the Rubber Band library (see below).
 
 ## Setting up Rubber Band (required dependency)
 
@@ -59,7 +59,7 @@ cmake --build build --config Release
 
 (If you're on Visual Studio 2022 instead of 2026, use `-G "Visual Studio 17 2022"`.)
 
-First configure will take a few minutes — it downloads the full JUCE framework source via `FetchContent`. Rebuilds after that are much faster.
+First configure will take a few minutes, it downloads the full JUCE framework source via `FetchContent`. Rebuilds after that are much faster.
 
 The executable, along with the Rubber Band runtime DLLs it needs (copied automatically by the build), lands at:
 
