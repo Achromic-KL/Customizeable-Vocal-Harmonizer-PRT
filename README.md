@@ -2,6 +2,8 @@
 
 A real-time vocal harmonizer built as a native Windows app with [JUCE](https://juce.com/). Sing or hum into your mic and it detects your pitch, calculates a harmony interval, and pitch-shifts your voice live to produce a second harmonized voice mixed in with your own.
 
+[untitled.bmp](https://github.com/user-attachments/files/33284617/untitled.bmp)
+
 ## What it does
 
 - Captures microphone input and analyzes it in real time using the **YIN pitch detection algorithm**
