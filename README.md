@@ -106,7 +106,3 @@ VocalHarmonizer/
 - Only one harmony voice at a time (no multi-voice stacking yet)
 - No preset saving/loading
 - Harmony interval is fixed-semitone, not key/scale-aware (so it can sound "off" against certain notes depending on the key you're singing in)
-
-## License note
-
-Rubber Band Library is GPL-licensed. It's used here as an external dependency (installed via vcpkg, not bundled in this repo), so this doesn't affect the license of this project's own source code. Worth reading [Rubber Band's licensing page](https://breakfastquay.com/rubberband/license.html) if you want to use it commercially.
